@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 export default function NavBar() {
   return (
     <header>
-      <h1>
+      <h2>
         <Link to="/">ASCII Art Generator</Link>
-      </h1>
+      </h2>
     </header>
   );
 }

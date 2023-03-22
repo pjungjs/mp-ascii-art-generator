@@ -10,7 +10,7 @@ export default function Home() {
     const file = event.target.files[0];
     setNewImg(file);
     
-    //URL.createObjectURL() static method creates a string containing a URL representing the object given in the parameter.
+    //.createObjectURL() method creates a DOMString containing a URL representing the object given in the parameter.
     setImgUrl(URL.createObjectURL(file));
   }
 
@@ -20,12 +20,16 @@ export default function Home() {
       <input type="file" name="image" accept="image/" className="upload-image"
         onChange={(event) => handleImgUpload(event)}
       />
-      
+      <br/>
       {newImg && imgUrl && (
-        <div className="img-preview">
-          <div>Image Preview:</div>
-          <img src={imgUrl} alt={newImg.name} />
-        </div>
+        <>
+          <br/>
+          <div className="img-preview">
+            <div>Image Preview:</div>
+            <br/>
+            <img src={imgUrl} alt={newImg.name} />
+          </div>
+        </>
       )}
 
       <Canvas newImg={newImg} />

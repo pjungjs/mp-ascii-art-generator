@@ -4,6 +4,7 @@ function Canvas({ newImg }) {
   const [imageWidth, setImageWidth] = useState(1); //uploaded image's width.
   const [imageHeight, setImageHeight] = useState(1); //uploaded image's height.
   const [asciiArt, setAsciiArt] = useState(""); //converted to Ascii art (string).
+
   const canvasRef = useRef();
 
   const asciiGraySequence = '$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/|()1{}[]?-_+~<>i!lI;:,"^`\'. ';
@@ -20,7 +21,7 @@ function Canvas({ newImg }) {
         image.onload = () => {
           setImageWidth(image.width);
           setImageHeight(image.height);
-
+          
           context.drawImage(image, 0, 0, imageWidth, imageHeight);
           const grayScales = convertToGrayScales(context, imageWidth, imageHeight);
 
@@ -65,7 +66,7 @@ function Canvas({ newImg }) {
 
     context.putImageData(imageData, 0, 0);
 
-    return  grayScales;
+    return grayScales;
   };
 
   //the formula for GrayScale adapted to the Human eyes.
@@ -73,6 +74,7 @@ function Canvas({ newImg }) {
     return 0.21 * r + 0.72 * g + 0.07 * b;
   }
 
+  //to convert the gray image to an ascii art
   function drawAscii(grayScales, width) {
     const ascii = grayScales.reduce((accumulator, currentValue, index) => {
       let nextChars = getCharacterForGrayScale(currentValue);
@@ -84,26 +86,29 @@ function Canvas({ newImg }) {
 
     setAsciiArt(ascii);
   }
-    
+  
+  //to translate the each pixel given to an ascii character.
   function getCharacterForGrayScale(grayScale) {
     return asciiGraySequence[Math.ceil((asciiGrayLength - 1) * grayScale / 255)];
   }
-console.log(typeof asciiArt)
+
   return (
     <>
-      <div>
+      <br/>
+      <div className="preview">
         <canvas
-          className="canvas-preview"
-          ref={canvasRef} 
+          ref={canvasRef}
           width={imageWidth}
           height={imageHeight}
           style={{ display: "none" }}
         />
       </div>
-      <div>
+      <div className="art">
         {/* "pre" tag represents preformatted text which is to be presented exactly as written in the HTML file. */}
-        <pre className="ascii">{asciiArt}</pre>
+        <pre>{asciiArt}</pre>
       </div>
+      <br/>
+      <br/>
     </>
   );
 };
