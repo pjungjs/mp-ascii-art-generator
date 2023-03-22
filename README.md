@@ -14,15 +14,13 @@ Deployed on Netlify: [ASCII Art Generator](https://mp-ascii-art-generator.netlif
 
 ---
 
-### Preview
+## Preview
 <figure>
     <figcaption>The landing page.</figcaption>
     <img src="./img-readme/landing page.png" alt="Landing Page" width="720">
 </figure>
 <br>
-<br>
-<h4>The image converted to an ASCII art:</h4>
-<br>
+<h3>The image converted to an ASCII art:</h3>
 <figure>
     <figcaption>One Piece Anime Logo.</figcaption>
     <img src="./img-readme/(one piece) img converted to ascii.png" alt="Search Result" width="720">
