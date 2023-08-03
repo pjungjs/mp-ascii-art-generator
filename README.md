@@ -36,6 +36,6 @@ Deployed on Netlify: [ASCII Art Generator](https://mp-ascii-art-generator.netlif
 
 ### Resources
 
-- [Tutorial for this Project](https://mp-ascii-art-generator.netlify.app/)
+- [Tutorial for this Project](https://www.jonathan-petitcolas.com/2017/12/28/converting-image-to-ascii-art.html)
 - [Animating a Canvas with React Hooks](http://www.petecorey.com/blog/2019/08/19/animating-a-canvas-with-react-hooks/)
 - [Canvas with React.js](https://medium.com/@pdx.lucasm/canvas-with-react-js-32e133c05258)
