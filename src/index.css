@@ -12,6 +12,15 @@ body {
   text-align: center;
 }
 
-.art{
-  font-size: 2px;
+.art {
+  overflow-x: auto;
+}
+
+.art pre {
+  display: inline-block;
+  margin: 0;
+  font-family: monospace;
+  font-size: 6px;
+  line-height: 1;
+  text-align: left;
 }

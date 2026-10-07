@@ -3,6 +3,11 @@ import { useState, useEffect, useRef } from "react";
 const asciiGraySequence = '$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/|()1{}[]?-_+~<>i!lI;:,"^`\'. ';
 const asciiGrayLength = asciiGraySequence.length;
 
+//the ascii art is never wider than this many characters, so big photos do not freeze the page.
+const MAX_COLUMNS = 200;
+//a character is about 0.6 times as wide as it is tall, so rows are scaled by it to keep the image's proportions.
+const CHAR_ASPECT_RATIO = 0.6;
+
 function convertToGrayScales(context, width, height) {
   const imageData = context.getImageData(0, 0, width, height);
 
@@ -78,14 +83,16 @@ function Canvas({ newImg }) {
       image.onload = () => {
         if (cancelled) return;
 
-        //size the canvas with the image's own size (state would still be outdated here).
-        canvas.width = image.width;
-        canvas.height = image.height;
+        //shrink the image to one pixel per character (never enlarge it).
+        const columns = Math.min(image.width, MAX_COLUMNS);
+        const rows = Math.max(1, Math.round(image.height * (columns / image.width) * CHAR_ASPECT_RATIO));
+        canvas.width = columns;
+        canvas.height = rows;
 
-        context.drawImage(image, 0, 0, image.width, image.height);
-        const grayScales = convertToGrayScales(context, image.width, image.height);
+        context.drawImage(image, 0, 0, columns, rows);
+        const grayScales = convertToGrayScales(context, columns, rows);
 
-        setAsciiArt(convertToAscii(grayScales, image.width));
+        setAsciiArt(convertToAscii(grayScales, columns));
       }
       image.src = event.target.result;
     }
