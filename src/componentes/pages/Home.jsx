@@ -8,6 +8,13 @@ export default function Home() {
   function handleImgUpload(event) {
     //"event.target.files" is an array with an object containing the uploaded file information.
     const file = event.target.files[0];
+
+    //no file selected (e.g.: the file dialog was cancelled): clear the previous image.
+    if (!file) {
+      setNewImg(null);
+      setImgUrl(null);
+      return;
+    }
     setNewImg(file);
     
     //.createObjectURL() method creates a DOMString containing a URL representing the object given in the parameter.
@@ -17,7 +24,7 @@ export default function Home() {
   return (
     <div>
       <h3>Upload a picture and turn it into ASCII art!</h3>
-      <input type="file" name="image" accept="image/" className="upload-image"
+      <input type="file" name="image" accept="image/*" className="upload-image"
         onChange={(event) => handleImgUpload(event)}
       />
       <br/>
