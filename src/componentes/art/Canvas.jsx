@@ -89,10 +89,17 @@ function Canvas({ newImg }) {
         canvas.width = columns;
         canvas.height = rows;
 
+        //transparent pixels would be read as black, so paint a white background first.
+        context.fillStyle = "#fff";
+        context.fillRect(0, 0, columns, rows);
         context.drawImage(image, 0, 0, columns, rows);
         const grayScales = convertToGrayScales(context, columns, rows);
 
         setAsciiArt(convertToAscii(grayScales, columns));
+      }
+      //e.g.: the file is not a valid image.
+      image.onerror = () => {
+        if (!cancelled) alert("That file could not be read as an image. Please try another one.");
       }
       image.src = event.target.result;
     }
