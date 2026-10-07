@@ -25,10 +25,7 @@ function convertToGrayScales(context, width, height) {
 
     //chained assignment:
     imageData.data[i] = imageData.data[i + 1] = imageData.data[i + 2] = grayScale;
-    // //same as:
-    // imageData.data[i] = grayScale;
-    // imageData.data[i + 1] = grayScale;
-    // imageData.data[i + 2] = grayScale;
+    
 
     grayScales.push(grayScale);
   }
