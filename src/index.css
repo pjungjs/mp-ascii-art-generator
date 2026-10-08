@@ -1,6 +1,20 @@
+:root {
+  --bg: #f6f7f9;
+  --card: #fff;
+  --text: #1d2433;
+  --muted: #5b6475;
+  --accent: #3b5bdb;
+  --border: #d9dde5;
+}
+
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
+  background: var(--bg);
+  color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -8,19 +22,211 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.App {
-  text-align: center;
+/* header and navigation */
+header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 24px;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
 }
 
-.art {
-  overflow-x: auto;
-}
-
-.art pre {
-  display: inline-block;
+header h2 {
   margin: 0;
-  font-family: monospace;
-  font-size: 6px;
-  line-height: 1;
+  font-size: 1.2rem;
+}
+
+header h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+nav {
+  display: flex;
+  gap: 16px;
+}
+
+nav a {
+  padding: 4px 2px;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: var(--text);
+}
+
+nav a.active {
+  border-bottom-color: var(--accent);
+  color: var(--accent);
+}
+
+/* pages */
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+.page {
+  max-width: 680px;
+  line-height: 1.6;
+}
+
+.page li {
+  margin-bottom: 12px;
+}
+
+a {
+  color: var(--accent);
+}
+
+/* home */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0 20px;
+}
+
+.actions .or {
+  color: var(--muted);
+}
+
+/* "Reset" sits alone at the far end of the row, away from the buttons that load a picture. */
+.actions .reset {
+  margin-left: auto;
+}
+
+/* the real file input is hidden visually only, so keyboard and screen reader users can still use it. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.btn,
+button {
+  display: inline-block;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  font: inherit;
+  line-height: 1.25;
+  cursor: pointer;
+}
+
+.btn:focus-within,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* an inset shadow draws the outline without adding to the button's size, so all buttons stay the same height. */
+button.secondary {
+  background: var(--card);
+  box-shadow: inset 0 0 0 1px var(--accent);
+  color: var(--accent);
+}
+
+button:disabled {
+  background: #b8c0d4;
+  cursor: not-allowed;
+}
+
+button.secondary:disabled {
+  background: var(--card);
+  box-shadow: inset 0 0 0 1px var(--border);
+  color: var(--muted);
+}
+
+.img-preview {
+  margin-bottom: 20px;
+  color: var(--muted);
+}
+
+.img-preview img {
+  display: block;
+  max-width: 100%;
+  max-height: 160px;
+  margin-top: 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.controls input[type="range"] {
+  flex: 1 1 180px;
+  accent-color: var(--accent);
+}
+
+.zoom-value {
+  color: var(--muted);
+}
+
+.error {
+  color: #c92a2a;
+}
+
+/* the frame where the ascii art is drawn */
+.art-frame {
+  display: flex;
+  min-height: 160px;
+  padding: 16px;
+  overflow: auto;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.art-frame pre {
+  margin: auto;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  /* 1.2 is the usual line spacing of editors, so the art looks the same once it is pasted there. */
+  line-height: 1.2;
   text-align: left;
+  /* a character is about 0.6em wide, so the art fills the same width whatever the zoom is. */
+  font-size: calc(min(100vw - 64px, 880px) / (var(--cols) * 0.6));
+}
+
+.art-frame.inverted {
+  background: #111;
+  border-color: #111;
+  color: #f2f2f2;
+}
+
+.placeholder {
+  margin: auto;
+  color: var(--muted);
+}
+
+.invert-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+}
+
+.tip {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.875rem;
 }

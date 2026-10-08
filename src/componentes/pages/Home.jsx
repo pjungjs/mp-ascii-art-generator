@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import Canvas from "../art/Canvas";
+import homerExample from "../../assets/homer.png";
 
 export default function Home() {
   const [newImg, setNewImg] = useState(null); //uploaded image's information.
   const [imgUrl, setImgUrl] = useState(null); //uploaded image's url.
+  const [resetCount, setResetCount] = useState(0); //changing it re-creates the file input and the art settings.
 
   useEffect(() => {
     if (!newImg) {
@@ -25,25 +27,51 @@ export default function Home() {
     setNewImg(event.target.files[0] || null);
   }
 
+  //back to the start: no image, an empty file input, and the zoom and invert settings at their defaults.
+  function handleReset() {
+    setNewImg(null);
+    setResetCount((count) => count + 1);
+  }
+
+  //load the example picture that comes with the website, the same way as an uploaded file.
+  async function handleExample() {
+    try {
+      const response = await fetch(homerExample);
+      const blob = await response.blob();
+      setNewImg(new File([blob], "homer.png", { type: blob.type }));
+    } catch (err) {
+      console.log(`example error: ${err}`);
+    }
+  }
+
   return (
-    <div>
+    <div className="home">
       <h3>Upload a picture and turn it into ASCII art!</h3>
-      <input type="file" name="image" accept="image/*" className="upload-image"
-        onChange={(event) => handleImgUpload(event)}
-      />
-      <br/>
+      <div className="actions">
+        {/* the native file input is hidden (but still reachable with the keyboard) and its label looks like a button. */}
+        <label className="btn">
+          Choose a picture
+          <input key={resetCount} type="file" name="image" accept="image/*" className="visually-hidden"
+            onChange={(event) => handleImgUpload(event)}
+          />
+        </label>
+        <span className="or">or</span>
+        <button type="button" className="secondary" onClick={handleExample}>
+          Try an example
+        </button>
+        <button type="button" className="secondary reset" onClick={handleReset} disabled={!newImg}>
+          Reset
+        </button>
+      </div>
+
       {newImg && imgUrl && (
-        <>
-          <br/>
-          <div className="img-preview">
-            <div>Image Preview:</div>
-            <br/>
-            <img src={imgUrl} alt={newImg.name} />
-          </div>
-        </>
+        <div className="img-preview">
+          <div>Image Preview: {newImg.name}</div>
+          <img src={imgUrl} alt={newImg.name} />
+        </div>
       )}
 
-      <Canvas newImg={newImg} />
+      <Canvas key={resetCount} imgUrl={imgUrl} />
     </div>
   );
 }
