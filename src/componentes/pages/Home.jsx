@@ -43,7 +43,7 @@ export default function Home() {
         </>
       )}
 
-      <Canvas newImg={newImg} />
+      <Canvas imgUrl={imgUrl} />
     </div>
   );
 }
